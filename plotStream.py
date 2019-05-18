@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.gridspec as gridspec
 
-f=h5py.File('MagFieldData_array_3D.hdf5','r')
+f=h5py.File('MagFieldData_array_5cm_grid_gpu_v3_debug.hdf5','r')
 array_bx = f['Bx_map']
 array_by = f['By_map']
 array_bz = f['Bz_map']
@@ -16,30 +16,30 @@ array_bz = f['Bz_map']
 plot=plt.figure()
 ax=plot.gca()
 
-x = np.linspace(-50.0,50.0, num=101)
-y = np.linspace(-50.0,50.0, num=101)
-z = np.linspace(0.0, 100.0, num=101)
+x = np.linspace(-500.0,500.0, num=201)
+y = np.linspace(-500.0,500.0, num=201)
+z = np.linspace(-500.0,500.0, num=201)
 
 Bx = []
 By = []
 Bz = []
 
-print(array_bx[0.0,0.0,5.0])
-print(array_by[0.0,0.0,5.0])
-print(array_bz[0.0,0.0,5.0])
+#print(array_bx[1.0,1.0,1.0])
+#print(array_by[1.0,1.0,1.0])
+#print(array_bz[40.0,40.0,50.0])
 
-for xi in range(-50,51):
+for xi in range(-500,501,5):
 	bx=[]
 	by=[]
 	bz=[]
-	for zk in range(101):
+	for zk in range(-500,501,5):
 		#print(str(array_bx[xi,0,zk])+'     '+str(array_bz[xi,0,zk]))
 		bx.append(array_bx[xi,0,zk])
 		by.append(array_by[xi,0,zk])
 		bz.append(array_bz[xi,0,zk])
-		#B = np.sqrt(array_bx[xi,0,zk]*array_bx[xi,0,zk] + array_bz[xi,0,zk]*array_bz[xi,0,zk])
-		#if (B>10.0):
-		#	print(str(xi)+'     '+str(zk)+'     '+str(array_bx[xi,0,zk])+'      '+str(array_by[xi,0,zk])+'      '+str(array_bz[xi,0,zk]))
+		B = np.sqrt(array_bx[xi,0,zk]*array_bx[xi,0,zk] + array_bz[xi,0,zk]*array_bz[xi,0,zk])
+		if (B>15.0):
+			print(str(xi)+'     '+str(zk)+'     '+str(array_bx[xi,0,zk])+'      '+str(array_by[xi,0,zk])+'      '+str(array_bz[xi,0,zk]))
 	Bx.append(bx)
 	By.append(by)
 	Bz.append(bz)
